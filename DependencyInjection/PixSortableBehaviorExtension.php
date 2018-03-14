@@ -37,10 +37,14 @@ class PixSortableBehaviorExtension extends Extension
         $container->setParameter('pix.sortable.behavior.position.field', $config['position_field']);
         $container->setParameter('pix.sortable.behavior.sortable_groups', $config['sortable_groups']);
 
-        $positionHandler = sprintf('pix_sortable_behavior.position.%s', $config['db_driver']);
+        $positionHandler = sprintf(
+            'pix_sortable_behavior.position.%s',
+            $config['db_driver']
+        );
         if ($config['position_handler']) {
             $positionHandler = $config['position_handler'];
         }
-        $container->setAlias('pix_sortable_behavior.position', $positionHandler);
+        $container->setAlias('pix_sortable_behavior.position', new Alias($positionHandler));
+        $container->getAlias('pix_sortable_behavior.position')->setPublic(true);
     }
 }
